@@ -8,9 +8,8 @@ export async function up(knex: Knex): Promise<void> {
     t.uuid("orgId").notNullable();
     t.foreign("orgId").references("id").inTable(TableName.Organization).onDelete("CASCADE");
     t.string("name").notNullable();
-    t.string("slug").notNullable();
     t.timestamps(true, true, true);
-    t.unique(["orgId", "slug"]);
+    t.unique(["orgId"]);
   });
 
   await knex.schema.createTable(TableName.WebsitesSecrets, (t) => {

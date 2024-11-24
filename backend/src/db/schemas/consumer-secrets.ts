@@ -11,7 +11,6 @@ export const ConsumerSecretsSchema = z.object({
   id: z.string().uuid(),
   orgId: z.string().uuid(),
   name: z.string(),
-  slug: z.string(),
   createdAt: z.date(),
   updatedAt: z.date()
 });

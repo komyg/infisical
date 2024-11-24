@@ -11,7 +11,7 @@ import { TImmutableDBKeys } from "./models";
 
 export const SecureNotesSecretsSchema = z.object({
   id: z.string().uuid(),
-  customerSecretsId: z.string().uuid(),
+  consumerSecretsId: z.string().uuid(),
   title: z.string(),
   encryptedNote: zodBuffer,
   createdAt: z.date(),

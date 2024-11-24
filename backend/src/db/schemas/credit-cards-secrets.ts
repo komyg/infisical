@@ -11,7 +11,7 @@ import { TImmutableDBKeys } from "./models";
 
 export const CreditCardsSecretsSchema = z.object({
   id: z.string().uuid(),
-  customerSecretsId: z.string().uuid(),
+  consumerSecretsId: z.string().uuid(),
   cardName: z.string(),
   cardHolderName: z.string(),
   encryptedCardNumber: zodBuffer,
