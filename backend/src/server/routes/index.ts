@@ -102,6 +102,8 @@ import { certificateTemplateDALFactory } from "@app/services/certificate-templat
 import { certificateTemplateEstConfigDALFactory } from "@app/services/certificate-template/certificate-template-est-config-dal";
 import { certificateTemplateServiceFactory } from "@app/services/certificate-template/certificate-template-service";
 import { cmekServiceFactory } from "@app/services/cmek/cmek-service";
+import { consumerSecretDALFactory } from "@app/services/consumer-secret/consumer-secret-dal";
+import { consumerSecretServiceFactory } from "@app/services/consumer-secret/consumer-secret-service";
 import { externalGroupOrgRoleMappingDALFactory } from "@app/services/external-group-org-role-mapping/external-group-org-role-mapping-dal";
 import { externalGroupOrgRoleMappingServiceFactory } from "@app/services/external-group-org-role-mapping/external-group-org-role-mapping-service";
 import { externalMigrationQueueFactory } from "@app/services/external-migration/external-migration-queue";
@@ -353,6 +355,8 @@ export const registerRoutes = async (
   const totpConfigDAL = totpConfigDALFactory(db);
 
   const externalGroupOrgRoleMappingDAL = externalGroupOrgRoleMappingDALFactory(db);
+
+  const consumerSecretDAL = consumerSecretDALFactory(db);
 
   const projectTemplateDAL = projectTemplateDALFactory(db);
 
@@ -1287,6 +1291,8 @@ export const registerRoutes = async (
     externalGroupOrgRoleMappingDAL
   });
 
+  const consumerSecretService = consumerSecretServiceFactory({ consumerSecretDAL });
+
   await superAdminService.initServerCfg();
 
   // setup the communication with license key server
@@ -1380,7 +1386,8 @@ export const registerRoutes = async (
     migration: migrationService,
     externalGroupOrgRoleMapping: externalGroupOrgRoleMappingService,
     projectTemplate: projectTemplateService,
-    totp: totpService
+    totp: totpService,
+    consumerSecret: consumerSecretService
   });
 
   const cronJobs: CronJob[] = [];
