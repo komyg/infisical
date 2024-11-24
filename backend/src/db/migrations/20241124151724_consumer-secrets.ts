@@ -17,7 +17,7 @@ export async function up(knex: Knex): Promise<void> {
     t.foreign("consumerSecretsId").references("id").inTable(TableName.ConsumerSecrets).onDelete("CASCADE");
     t.string("url").notNullable();
     t.string("username").notNullable();
-    t.binary("encryptedPassword").notNullable();
+    t.binary("encryptedPassword");
     t.timestamps(true, true, true);
   });
 

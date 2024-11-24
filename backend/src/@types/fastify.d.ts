@@ -84,6 +84,7 @@ import { TUserDALFactory } from "@app/services/user/user-dal";
 import { TUserServiceFactory } from "@app/services/user/user-service";
 import { TUserEngagementServiceFactory } from "@app/services/user-engagement/user-engagement-service";
 import { TWebhookServiceFactory } from "@app/services/webhook/webhook-service";
+import { TWebsiteSecretServiceFactory } from "@app/services/website-secret/website-secret-service";
 import { TWorkflowIntegrationServiceFactory } from "@app/services/workflow-integration/workflow-integration-service";
 
 declare module "fastify" {
@@ -196,6 +197,7 @@ declare module "fastify" {
       projectTemplate: TProjectTemplateServiceFactory;
       totp: TTotpServiceFactory;
       consumerSecret: TConsumerSecretServiceFactory;
+      websiteSecret: TWebsiteSecretServiceFactory;
     };
     // this is exclusive use for middlewares in which we need to inject data
     // everywhere else access using service layer

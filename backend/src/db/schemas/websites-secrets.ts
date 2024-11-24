@@ -14,7 +14,7 @@ export const WebsitesSecretsSchema = z.object({
   consumerSecretsId: z.string().uuid(),
   url: z.string(),
   username: z.string(),
-  encryptedPassword: zodBuffer,
+  encryptedPassword: zodBuffer.nullable().optional(),
   createdAt: z.date(),
   updatedAt: z.date()
 });

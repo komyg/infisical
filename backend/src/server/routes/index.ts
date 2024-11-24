@@ -211,6 +211,8 @@ import { userAliasDALFactory } from "@app/services/user-alias/user-alias-dal";
 import { userEngagementServiceFactory } from "@app/services/user-engagement/user-engagement-service";
 import { webhookDALFactory } from "@app/services/webhook/webhook-dal";
 import { webhookServiceFactory } from "@app/services/webhook/webhook-service";
+import { websiteSecretDALFactory } from "@app/services/website-secret/website-secret-dal";
+import { websiteSecretsServiceFactory } from "@app/services/website-secret/website-secret-service";
 import { workflowIntegrationDALFactory } from "@app/services/workflow-integration/workflow-integration-dal";
 import { workflowIntegrationServiceFactory } from "@app/services/workflow-integration/workflow-integration-service";
 
@@ -356,9 +358,11 @@ export const registerRoutes = async (
 
   const externalGroupOrgRoleMappingDAL = externalGroupOrgRoleMappingDALFactory(db);
 
-  const consumerSecretDAL = consumerSecretDALFactory(db);
-
   const projectTemplateDAL = projectTemplateDALFactory(db);
+
+  // Consumer Secrets DAL factories
+  const consumerSecretDAL = consumerSecretDALFactory(db);
+  const websiteSecretDAL = websiteSecretDALFactory(db);
 
   const permissionService = permissionServiceFactory({
     permissionDAL,
@@ -1291,7 +1295,9 @@ export const registerRoutes = async (
     externalGroupOrgRoleMappingDAL
   });
 
+  // Consumer Secret Service Factories
   const consumerSecretService = consumerSecretServiceFactory({ consumerSecretDAL });
+  const websiteSecretService = websiteSecretsServiceFactory({ websiteSecretDAL, kmsService });
 
   await superAdminService.initServerCfg();
 
@@ -1387,7 +1393,8 @@ export const registerRoutes = async (
     externalGroupOrgRoleMapping: externalGroupOrgRoleMappingService,
     projectTemplate: projectTemplateService,
     totp: totpService,
-    consumerSecret: consumerSecretService
+    consumerSecret: consumerSecretService,
+    websiteSecret: websiteSecretService
   });
 
   const cronJobs: CronJob[] = [];
