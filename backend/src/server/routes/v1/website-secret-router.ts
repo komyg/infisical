@@ -67,6 +67,7 @@ export const registerWebsiteSecretRouter = async (server: FastifyZodProvider) =>
         200: z.array(
           z.object({
             id: z.string().uuid(),
+            consumerSecretsId: z.string().uuid(),
             url: z.string().url(),
             username: z.string(),
             password: z.string().optional(),
@@ -84,6 +85,47 @@ export const registerWebsiteSecretRouter = async (server: FastifyZodProvider) =>
       });
 
       return websiteSecrets;
+    }
+  });
+
+  server.route({
+    method: "PATCH",
+    url: "/:consumerSecretsId/raw/website-secret/:id",
+    config: {
+      rateLimit: readLimit
+    },
+    schema: {
+      params: z.object({
+        consumerSecretsId: z.string().uuid().describe("The ID of the consumer secret that contains the website secret"),
+        id: z.string().uuid().describe("The ID of the website secret to update")
+      }),
+      body: z.object({
+        url: z.string().url().optional(),
+        username: z.string().optional(),
+        password: z.string().optional()
+      }),
+      response: {
+        200: z.object({
+          id: z.string().uuid(),
+          consumerSecretsId: z.string().uuid(),
+          url: z.string().url(),
+          username: z.string(),
+          password: z.string().optional(),
+          createdAt: z.date(),
+          updatedAt: z.date()
+        })
+      }
+    },
+    onRequest: verifyAuth([AuthMode.JWT]),
+    handler: async (req) => {
+      const { url, username, password } = req.body;
+      return server.services.websiteSecret.updateWebsiteSecret({
+        orgId: req.permission.orgId,
+        id: req.params.id,
+        url,
+        username,
+        password
+      });
     }
   });
 };

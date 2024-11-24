@@ -16,7 +16,6 @@ export type TListWebsiteSecretDTO = {
 
 export type TUpdateWebsiteSecretDTO = {
   id: string;
-  consumerSecretsId: string;
   orgId: string;
   url?: string;
   username?: string;
