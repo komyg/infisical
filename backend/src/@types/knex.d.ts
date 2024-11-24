@@ -59,6 +59,12 @@ import {
   TCertificateTemplates,
   TCertificateTemplatesInsert,
   TCertificateTemplatesUpdate,
+  TConsumerSecrets,
+  TConsumerSecretsInsert,
+  TConsumerSecretsUpdate,
+  TCreditCardsSecrets,
+  TCreditCardsSecretsInsert,
+  TCreditCardsSecretsUpdate,
   TDynamicSecretLeases,
   TDynamicSecretLeasesInsert,
   TDynamicSecretLeasesUpdate,
@@ -305,6 +311,9 @@ import {
   TSecretVersionV2TagJunction,
   TSecretVersionV2TagJunctionInsert,
   TSecretVersionV2TagJunctionUpdate,
+  TSecureNotesSecrets,
+  TSecureNotesSecretsInsert,
+  TSecureNotesSecretsUpdate,
   TServiceTokens,
   TServiceTokensInsert,
   TServiceTokensUpdate,
@@ -338,6 +347,9 @@ import {
   TWebhooks,
   TWebhooksInsert,
   TWebhooksUpdate,
+  TWebsitesSecrets,
+  TWebsitesSecretsInsert,
+  TWebsitesSecretsUpdate,
   TWorkflowIntegrations,
   TWorkflowIntegrationsInsert,
   TWorkflowIntegrationsUpdate
@@ -830,5 +842,26 @@ declare module "knex/types/tables" {
       TProjectTemplatesUpdate
     >;
     [TableName.TotpConfig]: KnexOriginal.CompositeTableType<TTotpConfigs, TTotpConfigsInsert, TTotpConfigsUpdate>;
+    // Consumer Secrets
+    [TableName.ConsumerSecrets]: KnexOriginal.CompositeTableType<
+      TConsumerSecrets,
+      TConsumerSecretsInsert,
+      TConsumerSecretsUpdate
+    >;
+    [TableName.WebsitesSecrets]: KnexOriginal.CompositeTableType<
+      TWebsitesSecrets,
+      TWebsitesSecretsInsert,
+      TWebsitesSecretsUpdate
+    >;
+    [TableName.CreditCardsSecrets]: KnexOriginal.CompositeTableType<
+      TCreditCardsSecrets,
+      TCreditCardsSecretsInsert,
+      TCreditCardsSecretsUpdate
+    >;
+    [TableName.SecureNotesSecrets]: KnexOriginal.CompositeTableType<
+      TSecureNotesSecrets,
+      TSecureNotesSecretsInsert,
+      TSecureNotesSecretsUpdate
+    >;
   }
 }
