@@ -12,9 +12,6 @@ export type TCreateWebsiteSecretDTO = {
 export type TListWebsiteSecretDTO = {
   consumerSecretsId: string;
   orgId: string;
-  url: string;
-  username: string;
-  password: Buffer;
 };
 
 export type TUpdateWebsiteSecretDTO = {

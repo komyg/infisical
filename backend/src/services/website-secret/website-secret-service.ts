@@ -1,7 +1,7 @@
 import { TKmsServiceFactory } from "../kms/kms-service";
 import { KmsDataKey } from "../kms/kms-types";
 import { TWebsiteSecretDALFactory } from "./website-secret-dal";
-import { TCreateWebsiteSecretDTO } from "./website-secret-types";
+import { TCreateWebsiteSecretDTO, TListWebsiteSecretDTO } from "./website-secret-types";
 
 type TWebsiteSecretsServiceFactoryDep = {
   websiteSecretDAL: TWebsiteSecretDALFactory;
@@ -18,17 +18,35 @@ export const websiteSecretsServiceFactory = ({ websiteSecretDAL, kmsService }: T
     username,
     password
   }: TCreateWebsiteSecretDTO) => {
-    const { encryptor: secretManagerEncryptor } = await kmsService.createCipherPairWithDataKey({
+    const { encryptor } = await kmsService.createCipherPairWithDataKey({
       type: KmsDataKey.Organization,
       orgId // TODO: use a key per consumer secret instead of the general org key.
     });
 
-    const encryptedPassword = password
-      ? secretManagerEncryptor({ plainText: Buffer.from(password) }).cipherTextBlob
-      : undefined;
+    const encryptedPassword = password ? encryptor({ plainText: Buffer.from(password) }).cipherTextBlob : undefined;
 
     return websiteSecretDAL.create({ consumerSecretsId, url, username, encryptedPassword });
   };
 
-  return { createWebsiteSecret };
+  const listWebsiteSecrets = async ({ consumerSecretsId, orgId }: TListWebsiteSecretDTO) => {
+    const { decryptor } = await kmsService.createCipherPairWithDataKey({
+      type: KmsDataKey.Organization,
+      orgId // TODO: use a key per consumer secret instead of the general org key.
+    });
+
+    const websiteSecrets = await websiteSecretDAL.find({ consumerSecretsId });
+    return websiteSecrets.map((secret) => ({
+      id: secret.id,
+      consumerSecretsId: secret.consumerSecretsId,
+      url: secret.url,
+      username: secret.username,
+      password: secret.encryptedPassword
+        ? decryptor({ cipherTextBlob: secret.encryptedPassword }).toString()
+        : undefined,
+      createdAt: secret.createdAt,
+      updatedAt: secret.updatedAt
+    }));
+  };
+
+  return { createWebsiteSecret, listWebsiteSecrets };
 };
