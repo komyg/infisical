@@ -7,7 +7,7 @@ import { registerProjectBotRouter } from "./bot-router";
 import { registerCaRouter } from "./certificate-authority-router";
 import { registerCertRouter } from "./certificate-router";
 import { registerCertificateTemplateRouter } from "./certificate-template-router";
-import { registerConsumerSecretRouter } from "./consumer-secret-router";
+import { registerConsumerSecretsRouter } from "./consumer-secrets-router";
 import { registerExternalGroupOrgRoleMappingRouter } from "./external-group-org-role-mapping-router";
 import { registerIdentityAccessTokenRouter } from "./identity-access-token-router";
 import { registerIdentityAwsAuthRouter } from "./identity-aws-iam-auth-router";
@@ -113,9 +113,9 @@ export const registerV1Routes = async (server: FastifyZodProvider) => {
 
   await server.register(
     async (counsumerSecretsRouter) => {
-      await counsumerSecretsRouter.register(registerConsumerSecretRouter);
+      await counsumerSecretsRouter.register(registerConsumerSecretsRouter);
       await counsumerSecretsRouter.register(registerWebsiteSecretRouter);
     },
-    { prefix: "/consumer-secret" }
+    { prefix: "/consumer-secrets" }
   );
 };

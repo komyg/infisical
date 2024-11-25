@@ -4,7 +4,7 @@ import { readLimit } from "@app/server/config/rateLimiter";
 import { verifyAuth } from "@app/server/plugins/auth/verify-auth";
 import { AuthMode } from "@app/services/auth/auth-type";
 
-export const registerConsumerSecretRouter = async (server: FastifyZodProvider) => {
+export const registerConsumerSecretsRouter = async (server: FastifyZodProvider) => {
   server.route({
     method: "GET",
     url: "/",
