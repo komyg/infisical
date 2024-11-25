@@ -1,6 +1,6 @@
 import { Knex } from "knex";
 
-export type TCreateConsumerSecretDTO = {
+export type TCreateConsumerSecretsDTO = {
   orgId: string;
   name: string;
   tx?: Knex;

@@ -26,7 +26,7 @@ export const registerConsumerSecretRouter = async (server: FastifyZodProvider) =
     },
     onRequest: verifyAuth([AuthMode.JWT]),
     handler: async (req) => {
-      const consumerSecrets = await server.services.consumerSecret.listConsumerSecrets({
+      const consumerSecrets = await server.services.consumerSecrets.listConsumerSecrets({
         orgId: req.permission.orgId
       });
       return consumerSecrets;
@@ -55,7 +55,7 @@ export const registerConsumerSecretRouter = async (server: FastifyZodProvider) =
     },
     onRequest: verifyAuth([AuthMode.JWT]),
     handler: async (req) => {
-      const consumerSecret = await server.services.consumerSecret.createConsumerSecret({
+      const consumerSecret = await server.services.consumerSecrets.createConsumerSecret({
         name: req.body.name,
         orgId: req.permission.orgId
       });

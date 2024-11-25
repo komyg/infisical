@@ -102,8 +102,8 @@ import { certificateTemplateDALFactory } from "@app/services/certificate-templat
 import { certificateTemplateEstConfigDALFactory } from "@app/services/certificate-template/certificate-template-est-config-dal";
 import { certificateTemplateServiceFactory } from "@app/services/certificate-template/certificate-template-service";
 import { cmekServiceFactory } from "@app/services/cmek/cmek-service";
-import { consumerSecretDALFactory } from "@app/services/consumer-secret/consumer-secret-dal";
-import { consumerSecretServiceFactory } from "@app/services/consumer-secret/consumer-secret-service";
+import { consumerSecretsDALFactory } from "@app/services/consumer-secrets/consumer-secrets-dal";
+import { consumerSecretsServiceFactory } from "@app/services/consumer-secrets/consumer-secrets-service";
 import { externalGroupOrgRoleMappingDALFactory } from "@app/services/external-group-org-role-mapping/external-group-org-role-mapping-dal";
 import { externalGroupOrgRoleMappingServiceFactory } from "@app/services/external-group-org-role-mapping/external-group-org-role-mapping-service";
 import { externalMigrationQueueFactory } from "@app/services/external-migration/external-migration-queue";
@@ -361,7 +361,7 @@ export const registerRoutes = async (
   const projectTemplateDAL = projectTemplateDALFactory(db);
 
   // Consumer Secrets DAL factories
-  const consumerSecretDAL = consumerSecretDALFactory(db);
+  const consumerSecretsDAL = consumerSecretsDALFactory(db);
   const websiteSecretDAL = websiteSecretDALFactory(db);
 
   const permissionService = permissionServiceFactory({
@@ -1296,7 +1296,7 @@ export const registerRoutes = async (
   });
 
   // Consumer Secret Service Factories
-  const consumerSecretService = consumerSecretServiceFactory({ consumerSecretDAL });
+  const consumerSecretsService = consumerSecretsServiceFactory({ consumerSecretsDAL });
   const websiteSecretService = websiteSecretsServiceFactory({ websiteSecretDAL, kmsService });
 
   await superAdminService.initServerCfg();
@@ -1393,7 +1393,7 @@ export const registerRoutes = async (
     externalGroupOrgRoleMapping: externalGroupOrgRoleMappingService,
     projectTemplate: projectTemplateService,
     totp: totpService,
-    consumerSecret: consumerSecretService,
+    consumerSecrets: consumerSecretsService,
     websiteSecret: websiteSecretService
   });
 
