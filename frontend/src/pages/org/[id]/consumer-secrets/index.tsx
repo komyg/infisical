@@ -1,4 +1,5 @@
 import { useListConsumerSecrets } from "@app/hooks/api/consumerSecrets";
+import { ManageConsumerSecretsPage } from "@app/views/ConsumerSecretsPage";
 import { EmptyConsumerSecretsPage } from "@app/views/EmptyConsumerSecretsPage";
 
 const ConsumerSecretsPage = () => {
@@ -11,7 +12,7 @@ const ConsumerSecretsPage = () => {
         <div className="mt-6 text-3xl font-semibold text-gray-200">Consumer Secrets</div>
         {isLoading && <p>Loading...</p>}
         {!isLoading && !data?.length && <EmptyConsumerSecretsPage />}
-        {!isLoading && !!data?.length && <p>Got secrets</p>}
+        {!isLoading && !!data?.length && <ManageConsumerSecretsPage />}
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ export const EmptyConsumerSecretsPage = () => {
 
   return (
     <>
-      <div className="mb-6 text-lg text-mineshaft-300">
+      <div className="text-md mb-6 text-mineshaft-300">
         Consumer Secrets allow you to securely store and manage secrets for your applications.
       </div>
       <div className="relative mb-6 flex justify-between rounded-md border border-mineshaft-600 bg-mineshaft-800 p-6">
