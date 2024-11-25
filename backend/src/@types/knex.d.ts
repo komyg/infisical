@@ -62,9 +62,6 @@ import {
   TConsumerSecrets,
   TConsumerSecretsInsert,
   TConsumerSecretsUpdate,
-  TCreditCardsSecrets,
-  TCreditCardsSecretsInsert,
-  TCreditCardsSecretsUpdate,
   TDynamicSecretLeases,
   TDynamicSecretLeasesInsert,
   TDynamicSecretLeasesUpdate,
@@ -311,9 +308,6 @@ import {
   TSecretVersionV2TagJunction,
   TSecretVersionV2TagJunctionInsert,
   TSecretVersionV2TagJunctionUpdate,
-  TSecureNotesSecrets,
-  TSecureNotesSecretsInsert,
-  TSecureNotesSecretsUpdate,
   TServiceTokens,
   TServiceTokensInsert,
   TServiceTokensUpdate,
@@ -852,16 +846,6 @@ declare module "knex/types/tables" {
       TWebsitesSecrets,
       TWebsitesSecretsInsert,
       TWebsitesSecretsUpdate
-    >;
-    [TableName.CreditCardsSecrets]: KnexOriginal.CompositeTableType<
-      TCreditCardsSecrets,
-      TCreditCardsSecretsInsert,
-      TCreditCardsSecretsUpdate
-    >;
-    [TableName.SecureNotesSecrets]: KnexOriginal.CompositeTableType<
-      TSecureNotesSecrets,
-      TSecureNotesSecretsInsert,
-      TSecureNotesSecretsUpdate
     >;
   }
 }
