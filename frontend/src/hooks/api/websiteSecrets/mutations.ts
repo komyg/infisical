@@ -1,11 +1,9 @@
 import { MutationOptions, useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
 
-import { createNotification } from "@app/components/notifications";
 import { apiRequest } from "@app/config/request";
 
 import { websiteSecretKey } from "./queries";
-import { TCreateWebsiteSecretDTO } from "./types";
+import { TCreateWebsiteSecretDTO, TDeleteWebsiteSecretDTO } from "./types";
 
 const createWebsiteSecret = async ({
   consumerSecretsId,
@@ -38,14 +36,37 @@ export const useCreateWebsiteSecret = ({
       queryClient.invalidateQueries(websiteSecretKey.listWebsiteSecrets({ consumerSecretsId }));
     },
     onError: (error) => {
-      if (axios.isAxiosError(error)) {
-        const serverResponse = error.response?.data as { message: string };
-        createNotification({
-          title: "Error creating Website Secret",
-          type: "error",
-          text: serverResponse.message
-        });
-      }
+      console.error(error);
+    },
+    ...options
+  });
+};
+
+const deleteWebsiteSecret = async ({ consumerSecretsId, id }: TDeleteWebsiteSecretDTO) => {
+  return apiRequest.delete(
+    `/api/v1/consumer-secrets/${consumerSecretsId}/raw/website-secret/${id}`
+  );
+};
+
+export const useDeleteWebsiteSecret = ({
+  consumerSecretsId,
+  options
+}: {
+  consumerSecretsId: string;
+  options?: Omit<
+    MutationOptions<{}, {}, Omit<TDeleteWebsiteSecretDTO, "consumerSecretsId">>,
+    "mutationFn"
+  >;
+}) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<{}, {}, Omit<TDeleteWebsiteSecretDTO, "consumerSecretsId">>({
+    mutationFn: async (dto) => deleteWebsiteSecret({ ...dto, consumerSecretsId }),
+    onSuccess: () => {
+      queryClient.invalidateQueries(websiteSecretKey.listWebsiteSecrets({ consumerSecretsId }));
+    },
+    onError: (error) => {
+      console.error(error);
     },
     ...options
   });

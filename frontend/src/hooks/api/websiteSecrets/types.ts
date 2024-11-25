@@ -18,6 +18,7 @@ export type TUpdateWebsiteSecretDTO = {
 
 export type TDeleteWebsiteSecretDTO = {
   id: string;
+  consumerSecretsId: string;
 };
 
 export type WebsiteSecretsResponse = {
