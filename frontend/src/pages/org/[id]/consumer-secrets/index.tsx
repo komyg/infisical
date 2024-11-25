@@ -12,7 +12,9 @@ const ConsumerSecretsPage = () => {
         <div className="mt-6 text-3xl font-semibold text-gray-200">Consumer Secrets</div>
         {isLoading && <p>Loading...</p>}
         {!isLoading && !data?.length && <EmptyConsumerSecretsPage />}
-        {!isLoading && !!data?.length && <ManageConsumerSecretsPage />}
+        {!isLoading && !!data?.length && (
+          <ManageConsumerSecretsPage consumerSecretsId={data[0].id} />
+        )}
       </div>
     </div>
   );
