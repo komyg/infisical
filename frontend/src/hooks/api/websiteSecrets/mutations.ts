@@ -3,7 +3,7 @@ import { MutationOptions, useMutation, useQueryClient } from "@tanstack/react-qu
 import { apiRequest } from "@app/config/request";
 
 import { websiteSecretKey } from "./queries";
-import { TCreateWebsiteSecretDTO, TDeleteWebsiteSecretDTO } from "./types";
+import { TCreateWebsiteSecretDTO, TDeleteWebsiteSecretDTO, TUpdateWebsiteSecretDTO } from "./types";
 
 const createWebsiteSecret = async ({
   consumerSecretsId,
@@ -62,6 +62,48 @@ export const useDeleteWebsiteSecret = ({
 
   return useMutation<{}, {}, Omit<TDeleteWebsiteSecretDTO, "consumerSecretsId">>({
     mutationFn: async (dto) => deleteWebsiteSecret({ ...dto, consumerSecretsId }),
+    onSuccess: () => {
+      queryClient.invalidateQueries(websiteSecretKey.listWebsiteSecrets({ consumerSecretsId }));
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+    ...options
+  });
+};
+
+const updateWebsiteSecret = async ({
+  id,
+  consumerSecretsId,
+  url,
+  username,
+  password
+}: TUpdateWebsiteSecretDTO) => {
+  const { data } = await apiRequest.patch(
+    `/api/v1/consumer-secrets/${consumerSecretsId}/raw/website-secret/${id}`,
+    {
+      url,
+      username,
+      password
+    }
+  );
+  return data;
+};
+
+export const useUpdateWebsiteSecret = ({
+  consumerSecretsId,
+  options
+}: {
+  consumerSecretsId: string;
+  options?: Omit<
+    MutationOptions<{}, {}, Omit<TUpdateWebsiteSecretDTO, "consumerSecretsId">>,
+    "mutationFn"
+  >;
+}) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<{}, {}, Omit<TUpdateWebsiteSecretDTO, "consumerSecretsId">>({
+    mutationFn: async (dto) => updateWebsiteSecret({ ...dto, consumerSecretsId }),
     onSuccess: () => {
       queryClient.invalidateQueries(websiteSecretKey.listWebsiteSecrets({ consumerSecretsId }));
     },

@@ -1,9 +1,16 @@
 import { useForm } from "react-hook-form";
 
 import { Button, FormControl, Input, Modal, ModalContent } from "@app/components/v2";
-import { useCreateWebsiteSecret } from "@app/hooks/api/websiteSecrets";
+import { useUpdateWebsiteSecret } from "@app/hooks/api/websiteSecrets";
 
 type TFormSchema = {
+  url: string;
+  username: string;
+  password: string;
+};
+
+type WebsiteSecret = {
+  id: string;
   url: string;
   username: string;
   password: string;
@@ -13,14 +20,22 @@ type Props = {
   consumerSecretsId: string;
   isOpen: boolean;
   onClose: () => void;
+  initialValues: WebsiteSecret;
 };
 
-export const CreateWebsiteSecretModal = ({ consumerSecretsId, isOpen, onClose }: Props) => {
-  const { handleSubmit, register, reset } = useForm<TFormSchema>();
-  const { mutateAsync } = useCreateWebsiteSecret({ consumerSecretsId });
+export const UpdateWebsiteSecretModal = ({
+  consumerSecretsId,
+  isOpen,
+  onClose,
+  initialValues
+}: Props) => {
+  const { handleSubmit, register, reset } = useForm<TFormSchema>({
+    defaultValues: initialValues
+  });
+  const { mutateAsync } = useUpdateWebsiteSecret({ consumerSecretsId });
 
   const handlerFormSubmit = async ({ url, username, password }: TFormSchema) => {
-    await mutateAsync({ url, username, password });
+    await mutateAsync({ id: initialValues.id, url, username, password });
     reset();
     onClose();
   };
@@ -49,7 +64,7 @@ export const CreateWebsiteSecretModal = ({ consumerSecretsId, isOpen, onClose }:
 
           <div className="flex gap-4">
             <Button variant="solid" colorSchema="primary" type="submit" className="h-min py-2">
-              Create Website Secret
+              Update Website Secret
             </Button>
             <Button variant="outline_bg" className="h-min py-2" onClick={() => onClose()}>
               Cancel
