@@ -1,13 +1,17 @@
 import { useListConsumerSecrets } from "@app/hooks/api/consumerSecrets";
+import { EmptyConsumerSecretsPage } from "@app/views/EmptyConsumerSecretsPage";
 
 const ConsumerSecretsPage = () => {
   const { data, isLoading } = useListConsumerSecrets();
   console.log(data, isLoading);
 
   return (
-    <div className="mb-4 flex flex-col items-start justify-start px-6 py-6 pb-0 text-3xl">
-      <div className="flex w-full justify-between">
-        <p className="mr-4 font-semibold text-white">Consumer Secrets</p>
+    <div className="flex h-full w-full justify-center bg-bunker-800 text-white">
+      <div className="w-full max-w-7xl px-6">
+        <div className="mt-6 text-3xl font-semibold text-gray-200">Consumer Secrets</div>
+        {isLoading && <p>Loading...</p>}
+        {!isLoading && !data?.length && <EmptyConsumerSecretsPage />}
+        {!isLoading && !!data?.length && <p>Got secrets</p>}
       </div>
     </div>
   );
