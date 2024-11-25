@@ -128,4 +128,31 @@ export const registerWebsiteSecretRouter = async (server: FastifyZodProvider) =>
       });
     }
   });
+
+  server.route({
+    method: "DELETE",
+    url: "/:consumerSecretsId/raw/website-secret/:id",
+    config: {
+      rateLimit: readLimit
+    },
+    schema: {
+      params: z.object({
+        consumerSecretsId: z.string().uuid().describe("The ID of the consumer secret that contains the website secret"),
+        id: z.string().uuid().describe("The ID of the website secret to delete")
+      }),
+      response: {
+        200: z.object({
+          id: z.string().uuid()
+        })
+      }
+    },
+    onRequest: verifyAuth([AuthMode.JWT]),
+    handler: async (req) => {
+      await server.services.websiteSecret.deleteWebsiteSecret({
+        id: req.params.id
+      });
+
+      return { id: req.params.id };
+    }
+  });
 };
