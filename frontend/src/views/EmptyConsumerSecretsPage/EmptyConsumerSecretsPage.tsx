@@ -28,13 +28,13 @@ export const EmptyConsumerSecretsPage = () => {
             className="flex items-center gap-4"
             noValidate
           >
-            <FormControl label="name" isRequired>
+            <FormControl label="Name" isRequired>
               <Input {...register("name")} placeholder="" />
             </FormControl>
 
             <div className="mt-1 flex h-[3.25rem] items-center">
               <Button variant="solid" colorSchema="primary" type="submit" className="h-min py-2">
-                + Create User Secrets
+                Create User Secrets
               </Button>
             </div>
           </form>
