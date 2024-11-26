@@ -764,13 +764,13 @@ export const AppLayout = ({ children }: LayoutProps) => {
                           </MenuItem>
                         </a>
                       </Link>
-                      <Link href={`/org/${currentOrg?.id}/consumer-secrets`} passHref>
+                      <Link href={`/org/${currentOrg?.id}/user-secrets`} passHref>
                         <a>
                           <MenuItem
-                            isSelected={router.asPath.includes("/consumer-secrets")}
+                            isSelected={router.asPath.includes("/user-secrets")}
                             icon="system-outline-189-domain-verification"
                           >
-                            Consumer Secrets
+                            User Secrets
                           </MenuItem>
                         </a>
                       </Link>

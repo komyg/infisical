@@ -21,7 +21,7 @@ export const useListConsumerSecrets = () => {
       if (axios.isAxiosError(error)) {
         const serverResponse = error.response?.data as { message: string };
         createNotification({
-          title: "Error fetching consumer secrets",
+          title: "Error fetching user secrets",
           type: "error",
           text: serverResponse.message
         });

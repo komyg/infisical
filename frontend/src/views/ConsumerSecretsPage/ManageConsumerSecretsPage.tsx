@@ -16,7 +16,7 @@ export const ManageConsumerSecretsPage = ({ consumerSecretsId }: Props) => {
   const { data, isLoading } = useListWebsiteSecrets({ consumerSecretsId });
   const { popUp, handlePopUpToggle } = usePopUp(["addWebsiteSecret"] as const);
 
-  const heading = <p className="text-md mb-6 text-bunker-300">Manage your consumer secrets here</p>;
+  const heading = <p className="text-md mb-6 text-bunker-300">Manage your user secrets here</p>;
   if (isLoading) {
     return (
       <>
