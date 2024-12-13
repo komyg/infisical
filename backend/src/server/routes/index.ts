@@ -102,6 +102,8 @@ import { certificateTemplateDALFactory } from "@app/services/certificate-templat
 import { certificateTemplateEstConfigDALFactory } from "@app/services/certificate-template/certificate-template-est-config-dal";
 import { certificateTemplateServiceFactory } from "@app/services/certificate-template/certificate-template-service";
 import { cmekServiceFactory } from "@app/services/cmek/cmek-service";
+import { consumerSecretsDALFactory } from "@app/services/consumer-secrets/consumer-secrets-dal";
+import { consumerSecretsServiceFactory } from "@app/services/consumer-secrets/consumer-secrets-service";
 import { externalGroupOrgRoleMappingDALFactory } from "@app/services/external-group-org-role-mapping/external-group-org-role-mapping-dal";
 import { externalGroupOrgRoleMappingServiceFactory } from "@app/services/external-group-org-role-mapping/external-group-org-role-mapping-service";
 import { externalMigrationQueueFactory } from "@app/services/external-migration/external-migration-queue";
@@ -209,6 +211,8 @@ import { userAliasDALFactory } from "@app/services/user-alias/user-alias-dal";
 import { userEngagementServiceFactory } from "@app/services/user-engagement/user-engagement-service";
 import { webhookDALFactory } from "@app/services/webhook/webhook-dal";
 import { webhookServiceFactory } from "@app/services/webhook/webhook-service";
+import { websiteSecretDALFactory } from "@app/services/website-secret/website-secret-dal";
+import { websiteSecretsServiceFactory } from "@app/services/website-secret/website-secret-service";
 import { workflowIntegrationDALFactory } from "@app/services/workflow-integration/workflow-integration-dal";
 import { workflowIntegrationServiceFactory } from "@app/services/workflow-integration/workflow-integration-service";
 
@@ -355,6 +359,10 @@ export const registerRoutes = async (
   const externalGroupOrgRoleMappingDAL = externalGroupOrgRoleMappingDALFactory(db);
 
   const projectTemplateDAL = projectTemplateDALFactory(db);
+
+  // Consumer Secrets DAL factories
+  const consumerSecretsDAL = consumerSecretsDALFactory(db);
+  const websiteSecretDAL = websiteSecretDALFactory(db);
 
   const permissionService = permissionServiceFactory({
     permissionDAL,
@@ -1287,6 +1295,10 @@ export const registerRoutes = async (
     externalGroupOrgRoleMappingDAL
   });
 
+  // Consumer Secret Service Factories
+  const consumerSecretsService = consumerSecretsServiceFactory({ consumerSecretsDAL });
+  const websiteSecretService = websiteSecretsServiceFactory({ websiteSecretDAL, kmsService });
+
   await superAdminService.initServerCfg();
 
   // setup the communication with license key server
@@ -1380,7 +1392,9 @@ export const registerRoutes = async (
     migration: migrationService,
     externalGroupOrgRoleMapping: externalGroupOrgRoleMappingService,
     projectTemplate: projectTemplateService,
-    totp: totpService
+    totp: totpService,
+    consumerSecrets: consumerSecretsService,
+    websiteSecret: websiteSecretService
   });
 
   const cronJobs: CronJob[] = [];

@@ -59,6 +59,9 @@ import {
   TCertificateTemplates,
   TCertificateTemplatesInsert,
   TCertificateTemplatesUpdate,
+  TConsumerSecrets,
+  TConsumerSecretsInsert,
+  TConsumerSecretsUpdate,
   TDynamicSecretLeases,
   TDynamicSecretLeasesInsert,
   TDynamicSecretLeasesUpdate,
@@ -338,6 +341,9 @@ import {
   TWebhooks,
   TWebhooksInsert,
   TWebhooksUpdate,
+  TWebsitesSecrets,
+  TWebsitesSecretsInsert,
+  TWebsitesSecretsUpdate,
   TWorkflowIntegrations,
   TWorkflowIntegrationsInsert,
   TWorkflowIntegrationsUpdate
@@ -830,5 +836,16 @@ declare module "knex/types/tables" {
       TProjectTemplatesUpdate
     >;
     [TableName.TotpConfig]: KnexOriginal.CompositeTableType<TTotpConfigs, TTotpConfigsInsert, TTotpConfigsUpdate>;
+    // Consumer Secrets
+    [TableName.ConsumerSecrets]: KnexOriginal.CompositeTableType<
+      TConsumerSecrets,
+      TConsumerSecretsInsert,
+      TConsumerSecretsUpdate
+    >;
+    [TableName.WebsitesSecrets]: KnexOriginal.CompositeTableType<
+      TWebsitesSecrets,
+      TWebsitesSecretsInsert,
+      TWebsitesSecretsUpdate
+    >;
   }
 }

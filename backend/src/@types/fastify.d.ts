@@ -1,6 +1,5 @@
 import "fastify";
 
-import { TUsers } from "@app/db/schemas";
 import { TAccessApprovalPolicyServiceFactory } from "@app/ee/services/access-approval-policy/access-approval-policy-service";
 import { TAccessApprovalRequestServiceFactory } from "@app/ee/services/access-approval-request/access-approval-request-service";
 import { TAuditLogServiceFactory } from "@app/ee/services/audit-log/audit-log-service";
@@ -41,6 +40,7 @@ import { TCertificateServiceFactory } from "@app/services/certificate/certificat
 import { TCertificateAuthorityServiceFactory } from "@app/services/certificate-authority/certificate-authority-service";
 import { TCertificateTemplateServiceFactory } from "@app/services/certificate-template/certificate-template-service";
 import { TCmekServiceFactory } from "@app/services/cmek/cmek-service";
+import { TConsumerSecretsServiceFactory } from "@app/services/consumer-secrets/consumer-secrets-service";
 import { TExternalGroupOrgRoleMappingServiceFactory } from "@app/services/external-group-org-role-mapping/external-group-org-role-mapping-service";
 import { TExternalMigrationServiceFactory } from "@app/services/external-migration/external-migration-service";
 import { TGroupProjectServiceFactory } from "@app/services/group-project/group-project-service";
@@ -84,6 +84,7 @@ import { TUserDALFactory } from "@app/services/user/user-dal";
 import { TUserServiceFactory } from "@app/services/user/user-service";
 import { TUserEngagementServiceFactory } from "@app/services/user-engagement/user-engagement-service";
 import { TWebhookServiceFactory } from "@app/services/webhook/webhook-service";
+import { TWebsiteSecretServiceFactory } from "@app/services/website-secret/website-secret-service";
 import { TWorkflowIntegrationServiceFactory } from "@app/services/workflow-integration/workflow-integration-service";
 
 declare module "fastify" {
@@ -195,6 +196,8 @@ declare module "fastify" {
       externalGroupOrgRoleMapping: TExternalGroupOrgRoleMappingServiceFactory;
       projectTemplate: TProjectTemplateServiceFactory;
       totp: TTotpServiceFactory;
+      consumerSecrets: TConsumerSecretsServiceFactory;
+      websiteSecret: TWebsiteSecretServiceFactory;
     };
     // this is exclusive use for middlewares in which we need to inject data
     // everywhere else access using service layer

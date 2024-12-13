@@ -7,6 +7,7 @@ import { registerProjectBotRouter } from "./bot-router";
 import { registerCaRouter } from "./certificate-authority-router";
 import { registerCertRouter } from "./certificate-router";
 import { registerCertificateTemplateRouter } from "./certificate-template-router";
+import { registerConsumerSecretsRouter } from "./consumer-secrets-router";
 import { registerExternalGroupOrgRoleMappingRouter } from "./external-group-org-role-mapping-router";
 import { registerIdentityAccessTokenRouter } from "./identity-access-token-router";
 import { registerIdentityAwsAuthRouter } from "./identity-aws-iam-auth-router";
@@ -39,6 +40,7 @@ import { registerUserActionRouter } from "./user-action-router";
 import { registerUserEngagementRouter } from "./user-engagement-router";
 import { registerUserRouter } from "./user-router";
 import { registerWebhookRouter } from "./webhook-router";
+import { registerWebsiteSecretRouter } from "./website-secret-router";
 import { registerWorkflowIntegrationRouter } from "./workflow-integration-router";
 
 export const registerV1Routes = async (server: FastifyZodProvider) => {
@@ -108,4 +110,12 @@ export const registerV1Routes = async (server: FastifyZodProvider) => {
   await server.register(registerDashboardRouter, { prefix: "/dashboard" });
   await server.register(registerCmekRouter, { prefix: "/kms" });
   await server.register(registerExternalGroupOrgRoleMappingRouter, { prefix: "/external-group-mappings" });
+
+  await server.register(
+    async (counsumerSecretsRouter) => {
+      await counsumerSecretsRouter.register(registerConsumerSecretsRouter);
+      await counsumerSecretsRouter.register(registerWebsiteSecretRouter);
+    },
+    { prefix: "/consumer-secrets" }
+  );
 };
